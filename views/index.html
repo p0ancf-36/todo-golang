@@ -1,0 +1,38 @@
+{{ block "index" . }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list on golang</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div
+    hx-get="/task?page=0"
+    hx-trigger="load"
+    hx-swap="outerHTML">
+
+    </div>
+</body>
+</html>
+{{ end }}
+
+{{ block "tasks" . -}}
+<ul>
+    {{ range .Tasks -}}
+        {{ template "task" . }}
+    {{- end }}
+</ul>
+{{- end }}
+
+{{ block "task" . -}}
+<li>
+    <h3>{{ .Title }}</h3>
+    {{ if .Description -}}
+        <p>{{ .Description }}</p>
+    {{- end }}
+    <p>{{ .Id }}</p>
+</li>
+{{ end }}
